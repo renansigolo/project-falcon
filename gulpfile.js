@@ -158,7 +158,7 @@ gulp.task('serve', ['scss', 'js'], function() {
   });
   gulp.watch('src/assets/_pre/sass/**/*.scss', ['scss']);
   gulp.watch('src/assets/_pre/js/**/*.js', ['js']);
-  gulp.watch("src/*.html").on('change', browserSync.reload);
+  gulp.watch("src/**/*.html").on('change', browserSync.reload);
 });
 
 //Watch task
