@@ -12,23 +12,21 @@ Project Falcon is a template designed to simplify the folder structure used on a
 
     [Homebrew](https://brew.sh/)
 
-    [Yarn](https://yarnpkg.com/en/docs/install)
-
 * **Download and Unzip**
 
-    [Project Cheetah](https://github.com/renansigolo/project-cheetah)
+    [Project Falcon](https://github.com/renansigolo/project-falcon)
 
-* **Install Project Cheetah Dependencies**
+* **Install Project falcon Dependencies**
 
-    Open terminal
+    Open terminal and run
 
-* ***Type:***
+    ```
+    cd /Users/your-username-here/Downloads/project-falcon-master/
 
-    cd /Users/your-username-here/Downloads/project-cheetah-master/
+    npm i
+    ```
 
-    yarn install
-
-###### ** That's it ! Your're ready to go ;) **
+#### ** That's it ! Your're ready to go ;) **
 
 ## How it works !?
 
@@ -97,7 +95,7 @@ Gulp optimize you code to the production environment. The workflow does the foll
 
 ## Documentation
 
-All documentation can be found at [https://github.com/renansigolo/project-cheetah](https://github.com/renansigolo/project-cheetah).
+All documentation can be found at [https://github.com/renansigolo/project-falcon](https://github.com/renansigolo/project-falcon).
 
 ## License
 
