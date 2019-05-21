@@ -10,8 +10,6 @@ Project Falcon is a template designed to simplify the folder structure used on a
 
 * [Node.js](https://nodejs.org/en/)
 
-* [Homebrew](https://brew.sh/)
-
 **Download and Unzip**
 
 * [Project Falcon](https://github.com/renansigolo/project-falcon)
