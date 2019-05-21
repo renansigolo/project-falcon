@@ -1,175 +1,194 @@
-'use strict';
+"use strict";
 
-//GLOBAL
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
+/**************** Global Imports ****************/
 
-//VARIABLES FOR WATCH
-var sass = require('gulp-sass');
-var cssnano = require('gulp-cssnano');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('gulp-autoprefixer');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
+const { series, parallel, watch, src, dest } = require("gulp");
+const browserSync = require("browser-sync").create();
 
-//VARIABLES FOR PRODUCTION
-var del = require('del');
-var htmlmin = require('gulp-htmlmin');
-var sitemap = require('gulp-sitemap');
-var imagemin = require('gulp-imagemin');
-var imageminPngquant = require('imagemin-pngquant');
-var imageminGuetzli = require('imagemin-guetzli');
+const sass = require("gulp-sass");
+const cssnano = require("gulp-cssnano");
+const autoprefixer = require("gulp-autoprefixer");
+const rename = require("gulp-rename");
+const uglify = require("gulp-uglify");
+const concat = require("gulp-concat");
 
+const del = require("del");
+const htmlmin = require("gulp-htmlmin");
+const sitemap = require("gulp-sitemap");
+const imagemin = require("gulp-imagemin");
+const imageminPngquant = require("imagemin-pngquant");
+const imageminGuetzli = require("imagemin-guetzli");
 
-//TASKS FOR WATCH
+/**************** Functions ****************/
 
-//Watch SCSS files -> sourcemap, autroprefixer, minify with cssnano, rename .css to .min.css
-gulp.task('scss', function() {
-  return gulp.src('src/assets/_pre/sass/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(cssnano({
-      zindex: false
-    }))
-    .pipe(rename(function(path) {
-      if (path.extname === '.css') {
-        path.basename = 'styles';
-        path.basename += '.min';
-      }
-    }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('src/assets/css/'))
+// Watch SCSS files -> sourcemap, autroprefixer, minify with cssnano, rename .css to .min.css
+const scss = () => {
+  return src("src/assets/_pre/sass/*.scss", { sourcemaps: true })
+    .pipe(sass().on("error", sass.logError))
+    .pipe(
+      autoprefixer({
+        browsers: ["last 2 versions"],
+        cascade: false
+      })
+    )
+    .pipe(
+      cssnano({
+        zindex: false
+      })
+    )
+    .pipe(
+      rename(function(path) {
+        if (path.extname === ".css") {
+          path.basename = "styles";
+          path.basename += ".min";
+        }
+      })
+    )
+    .pipe(dest("src/assets/css/", { sourcemaps: true }))
     .pipe(browserSync.stream());
-});
+};
 
-//Watch JS files -> sourcemap, minifiy with uglify, concat
-
-var jsFiles = [
-  'src/assets/_pre/js/main.js'
-];
-
-gulp.task('js', function() {
-  return gulp.src(jsFiles)
-    .pipe(sourcemaps.init())
+// Watch JS files -> sourcemap, minifiy with uglify, concat
+const js = () => {
+  return src("src/assets/_pre/js/*.js", { sourcemaps: true })
     .pipe(uglify())
-    .pipe(concat('scripts.js'))
-    .pipe(rename(function(path) {
-      if (path.extname === '.js') {
-        path.basename += '.min';
-      }
-    }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('src/assets/js/'))
+    .pipe(concat("scripts.js"))
+    .pipe(
+      rename(function(path) {
+        if (path.extname === ".js") {
+          path.basename += ".min";
+        }
+      })
+    )
+    .pipe(dest("src/assets/js/", { sourcemaps: true }))
     .pipe(browserSync.stream());
-});
+};
 
-//Watch Libs -> concat JS libraries
+// Concat Minified JS libraries
+const jsLibs = () => {
+  const libPaths = [
+    "node_modules/jquery/dist/jquery.slim.min.js",
+    "node_modules/popper.js/dist/umd/popper.min.js",
+    "node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ];
 
-var libPaths = [
-  // INSTALL YOUR JS LIBRARIES WITH YARN THEN INSERT THEIR PATH HERE
-  'node_modules/jquery/dist/jquery.slim.min.js',
-  'node_modules/popper.js/dist/umd/popper.min.js',
-  'node_modules/bootstrap/dist/js/bootstrap.min.js'
-];
+  return src(libPaths)
+    .pipe(concat("libs.js"))
+    .pipe(
+      rename(function(path) {
+        if (path.extname === ".js") {
+          path.basename += ".min";
+        }
+      })
+    )
+    .pipe(dest("src/assets/js/"));
+};
 
-gulp.task('jsLibs', function() {
-  return gulp.src(libPaths)
-    .pipe(concat('libs.js'))
-    .pipe(rename(function(path) {
-      if (path.extname === '.js') {
-        path.basename += '.min';
-      }
-    }))
-    .pipe(gulp.dest('src/assets/js/'));
-});
+// Delete all files in the dist folder
+const clean = () => {
+  del.sync(["dist/**/*"]);
+  return Promise.resolve();
+};
 
+// Minify HTML files
+const minifyHtml = () => {
+  return src("src/**/*.html")
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true
+      })
+    )
+    .pipe(dest("dist"));
+};
 
-//TASKS FOR DISTRIBUTION
+// Create sitemap.xml
+const generateSitemap = () => {
+  return src("src/**/*.html", {
+    read: false
+  })
+    .pipe(
+      sitemap({
+        siteUrl: "https://www.INSERT_YOUR_WEBSITE_ADDRESS_HERE.com.br"
+      })
+    )
+    .pipe(dest("dist"));
+};
 
-//Delete all files in the dist folder
-gulp.task('clean', function() {
-  return del.sync(['dist/**/*']);
-});
+// Optimize Images - GIF, SVG and ICO
+const optimizeGif = () => {
+  return src("src/**/*.{gif,svg,ico}")
+    .pipe(
+      imagemin([
+        imagemin.gifsicle({
+          interlaced: true,
+          optimizationLevel: 3
+        })
+      ])
+    )
+    .pipe(dest("dist/"));
+};
 
-//Minify HTML files
-gulp.task('htmlmin', function() {
-  return gulp.src('src/**/*.html')
-    .pipe(htmlmin({
-      collapseWhitespace: true
-    }))
-    .pipe(gulp.dest('dist'));
-});
-
-//Create sitemap.xml
-gulp.task('sitemap', function() {
-  gulp.src('src/**/*.html', {
-      read: false
-    })
-    .pipe(sitemap({
-      siteUrl: 'https://www.INSERT_YOUR_WEBSITE_ADDRESS_HERE.com.br'
-    }))
-    .pipe(gulp.dest('dist'));
-});
-
-//Optimize Images - GIF, SVG and ICO
-gulp.task('imagemin', function() {
-  gulp.src('src/**/*.{gif,svg,ico}')
-    .pipe(imagemin([imagemin.gifsicle({
-      interlaced: true,
-      optimizationLevel: 3
-    })]))
-    .pipe(gulp.dest('dist/'));
-});
-
-//Optimize Images - PNG
-gulp.task('imageminPngquant', function() {
-  gulp.src('src/**/*.png')
+// Optimize Images - PNG
+const optimizePng = () => {
+  return src("src/**/*.png")
     .pipe(imagemin([imageminPngquant()]))
-    .pipe(gulp.dest('dist/'));
-});
+    .pipe(dest("dist/"));
+};
 
-//Optimize Images - JPG ang JPEG
-gulp.task('imageminGuetzli', function() {
-  gulp.src('src/**/*.{jpg,jpeg}')
+// Optimize Images - JPG ang JPEG
+const optimizeJpg = () => {
+  return src("src/**/*.{jpg,jpeg}")
     .pipe(imagemin([imageminGuetzli()]))
-    .pipe(gulp.dest('dist/'));
-});
+    .pipe(dest("dist/"));
+};
 
-//Copy remaining files to dist
-gulp.task('copy', ['scss', 'js', 'jsLibs'], function() {
-  return gulp.src(['src/**/*.{xml,txt,eot,ttf,woff,woff2,otf,ttf,php,css,js,json,map}', '!src/assets/_pre/**/*'])
-    .pipe(gulp.dest('dist/'));
-});
+// Copy remaining files to dist
+const copy = () => {
+  return src([
+    "src/**/*.{xml,txt,eot,ttf,woff,woff2,otf,ttf,php,css,js,json,map}",
+    "!src/assets/_pre/**/*"
+  ]).pipe(dest("dist/"));
+};
 
+// Watch
+const watchFiles = () => {
+  watch("src/**/*.html").on("change", browserSync.reload);
+  watch("src/assets/_pre/sass/**/*.scss", scss);
+  watch("src/assets/_pre/js/**/*.js", js);
+  watch("node_modules/**/*", jsLibs);
+};
 
-//GULP TASKS
-
-// Static server
-gulp.task('serve', ['scss', 'js'], function() {
+// Serve
+const serve = () => {
   browserSync.init({
     server: {
       baseDir: "./src/"
     }
   });
-  gulp.watch('src/assets/_pre/sass/**/*.scss', ['scss']);
-  gulp.watch('src/assets/_pre/js/**/*.js', ['js']);
-  gulp.watch("src/**/*.html").on('change', browserSync.reload);
-});
 
-//Watch task
-gulp.task('watch', function() {
-  gulp.watch('src/assets/_pre/sass/**/*.scss', ['scss']);
-  gulp.watch('src/assets/_pre/js/**/*.js', ['js']);
-  gulp.watch('node_modules/**/*', ['jsLibs']);
-});
+  watchFiles();
+};
 
-//Compile task
-gulp.task('compile', ['scss', 'js', 'jsLibs']);
+/**************** Gulp Commands ****************/
 
-//Distribution task
-gulp.task('default', ['clean', 'htmlmin', 'scss', 'js', 'jsLibs', 'sitemap', 'imagemin', 'imageminPngquant', 'imageminGuetzli', 'copy']);
+// Start
+exports.start = serve;
+
+// Build
+exports.build = parallel(scss, js, jsLibs);
+
+// Build Production
+exports.default = series(
+  clean,
+  parallel(
+    minifyHtml,
+    scss,
+    js,
+    jsLibs,
+    generateSitemap,
+    optimizeGif,
+    optimizePng,
+    optimizeJpg,
+    copy
+  )
+);

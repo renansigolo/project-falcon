@@ -1,24 +1,24 @@
 # Project Falcon
 
-### the fastest workflow around the block
+**The fastest task builder around the block**
 
 Project Falcon is a template designed to simplify the folder structure used on a website development with a gulp workflow that delivers the fastest performance to your code.
 
 ## Getting Started
 
-* **Download and Install**
+**Download and Install**
 
-    [Node.js](https://nodejs.org/en/)
+* [Node.js](https://nodejs.org/en/)
 
-    [Homebrew](https://brew.sh/)
+* [Homebrew](https://brew.sh/)
 
-* **Download and Unzip**
+**Download and Unzip**
 
-    [Project Falcon](https://github.com/renansigolo/project-falcon)
+* [Project Falcon](https://github.com/renansigolo/project-falcon)
 
-* **Install Project falcon Dependencies**
+**Install Project Falcon Dependencies**
 
-    Open terminal and run
+* Open terminal and run
 
     ```
     cd /Users/your-username-here/Downloads/project-falcon-master/
@@ -73,11 +73,9 @@ Gulp optimize you code to the production environment. The workflow does the foll
 
 ## Gulp Commands
 
-* To serve your files and reload the browser after compile use: `gulp serve`
+* To serve your files and reload the browser after compile use: `gulp start`
 
-* To watch your files use: `gulp watch`
-
-* To compile only js and sass files use: `gulp compile`
+* To compile only js and sass files use: `gulp build`
 
 * To compile everything in order to deploy to production use: `gulp`
 
@@ -95,7 +93,7 @@ Gulp optimize you code to the production environment. The workflow does the foll
 
 ## Documentation
 
-All documentation can be found at [https://github.com/renansigolo/project-falcon](https://github.com/renansigolo/project-falcon).
+All documentation can be found [here](https://github.com/renansigolo/project-falcon).
 
 ## License
 
