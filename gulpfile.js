@@ -23,7 +23,7 @@ const imageminGuetzli = require("imagemin-guetzli");
 
 // Watch SCSS files -> sourcemap, autroprefixer, minify with cssnano, rename .css to .min.css
 const scss = () => {
-  return src("src/assets/_pre/sass/*.scss", { sourcemaps: true })
+  return src("src/assets/_pre/sass/main.scss", { sourcemaps: true })
     .pipe(sass().on("error", sass.logError))
     .pipe(
       autoprefixer({
