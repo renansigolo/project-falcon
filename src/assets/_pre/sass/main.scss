@@ -1,18 +1,18 @@
 // Import Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
 
 //Google Icons
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 // Configuration
-@import "base/variables";
+@import 'base/variables';
 
 //Plugins
-@import "plugins/plugin";
+@import 'plugins/plugin';
 
 // Components
-@import "components/typography";
-@import "components/navigation";
-@import "components/layout";
-@import "components/buttons";
-@import "components/forms";
+@import 'components/typography';
+@import 'components/navigation';
+@import 'components/layout';
+@import 'components/buttons';
+@import 'components/forms';

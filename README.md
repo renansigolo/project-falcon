@@ -8,21 +8,21 @@ Project Falcon is a template designed to simplify the folder structure used on a
 
 **Download and Install**
 
-* [Node.js](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/)
 
 **Download and Unzip**
 
-* [Project Falcon](https://github.com/renansigolo/project-falcon)
+- [Project Falcon](https://github.com/renansigolo/project-falcon)
 
 **Install Project Falcon Dependencies**
 
-* Open terminal and run
+- Open terminal and run
 
-    ```
-    cd /Users/your-username-here/Downloads/project-falcon-master/
+  ```
+  cd /Users/your-username-here/Downloads/project-falcon-master/
 
-    npm i
-    ```
+  npm i
+  ```
 
 #### ** That's it ! Your're ready to go ;) **
 
@@ -30,64 +30,65 @@ Project Falcon is a template designed to simplify the folder structure used on a
 
 **Watch**
 
-* The watch command will compile SASS, JS and JS Libraries in real time
+- The watch command will compile SASS, JS and JS Libraries in real time
 
 **Distribution Workflow**
 
 Gulp optimize you code to the production environment. The workflow does the following:
 
-* Clean the dist folder
+- Clean the dist folder
 
-* SASS
+- SASS
 
-    Create sourcemaps,
+  Create sourcemaps,
 
-    Use autroprefixer to ensure compatibility with the 2 last versions of all web browsers,
+  Use autroprefixer to ensure compatibility with the 2 last versions of all web browsers,
 
-    Minify the code with cssnano,
+  Minify the code with cssnano,
 
-    Rename `*.sass` to `styles.min.css`
+  Rename `*.sass` to `styles.min.css`
 
-    Paste in `/src/assets/css/`
+  Paste in `/src/assets/css/`
 
-* JS
+- JS
 
-    Create sourcemap,
+  Create sourcemap,
 
-    Minifiy the code with uglify,
+  Minifiy the code with uglify,
 
-    Concat all files in `/src/assets/_pre/js/`
+  Concat all files in `/src/assets/_pre/js/`
 
-    Paste scripts.min.js in `/src/assets/js/`
+  Paste scripts.min.js in `/src/assets/js/`
 
-* Concat JS libraries
+- Concat JS libraries
 
-* Minify HTML files
+- Minify HTML files
 
-* Optimize Images (GIF, SVG, ICO, JPG, JPEG, PNG)
+- Optimize Images (GIF, SVG, ICO, JPG, JPEG, PNG)
 
-* Copy remaining files
+- Copy remaining files
 
+## Commands
 
-## Gulp Commands
+- To serve your files and reload the browser after compile use: `npm start`
 
-* To serve your files and reload the browser after compile use: `gulp start`
+- To compile only js and sass files use: `npm run build`
 
-* To compile only js and sass files use: `gulp build`
+- To compile everything in order to deploy to production use: `gulp` or `npm run build:prod`
 
-* To compile everything in order to deploy to production use: `gulp`
+- To auto-format your code and make it look pretty use: `npm run prettier`
 
 ## Acknowledgments
 
-* This template uses [Bootstrap 4](https://getbootstrap.com/) framework
+- This template uses [Bootstrap 4](https://getbootstrap.com/) framework
 
-* This template uses [Google Material Icons](https://material.io/icons/)
+- This template uses [Google Material Icons](https://material.io/icons/)
 
-* JPG's and JPEG's are compressed with [Guetzli](https://github.com/google/guetzli) from [Google](https://github.com/google)
+- JPG's and JPEG's are compressed with [Guetzli](https://github.com/google/guetzli) from [Google](https://github.com/google)
 
-* PNG's are compressed with [Pngquant](https://pngquant.org/) from [Kornel Lesiński](https://kornel.ski/about)
+- PNG's are compressed with [Pngquant](https://pngquant.org/) from [Kornel Lesiński](https://kornel.ski/about)
 
-* Last but not least a huge thumbs up to everyone at [Mastertech](https://mastertech.tech/)
+- Last but not least a huge thumbs up to everyone at [Mastertech](https://mastertech.tech/)
 
 ## Documentation
 

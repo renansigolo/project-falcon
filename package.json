@@ -9,7 +9,8 @@
     "clean": "rm -rf package-lock.json node_modules dist",
     "build": "gulp build",
     "build:prod": "gulp",
-    "start": "gulp start"
+    "start": "gulp start",
+    "prettier": "prettier --config ./.prettierrc.json --write \"./**/*.{js,json,md,scss,html}\""
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
@@ -30,7 +31,8 @@
     "gulp-sitemap": "^6.2.0",
     "gulp-uglify": "^3.0.2",
     "imagemin-guetzli": "^2.0.0",
-    "imagemin-pngquant": "^7.0.0"
+    "imagemin-pngquant": "^7.0.0",
+    "prettier": "^1.17.1"
   },
   "engines": {
     "node": "~10.15.0",
