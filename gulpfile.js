@@ -5,19 +5,19 @@
 const { series, parallel, watch, src, dest } = require('gulp')
 const browserSync = require('browser-sync').create()
 
-const sass = require('gulp-sass')
-const cssnano = require('gulp-cssnano')
 const autoprefixer = require('gulp-autoprefixer')
-const rename = require('gulp-rename')
-const uglify = require('gulp-uglify')
 const concat = require('gulp-concat')
-
+const cssnano = require('cssnano')
 const del = require('del')
 const htmlmin = require('gulp-htmlmin')
-const sitemap = require('gulp-sitemap')
 const imagemin = require('gulp-imagemin')
-const imageminPngquant = require('imagemin-pngquant')
 const imageminGuetzli = require('imagemin-guetzli')
+const imageminPngquant = require('imagemin-pngquant')
+const postcss = require('gulp-postcss')
+const rename = require('gulp-rename')
+const sass = require('gulp-sass')
+const sitemap = require('gulp-sitemap')
+const uglify = require('gulp-uglify')
 
 /**************** Functions ****************/
 
@@ -27,14 +27,18 @@ const scss = () => {
     .pipe(sass().on('error', sass.logError))
     .pipe(
       autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
+        cascade: false,
+        remove: true
       })
     )
     .pipe(
-      cssnano({
-        zindex: false
-      })
+      postcss([
+        cssnano({
+          discardComments: {
+            removeAll: true
+          }
+        })
+      ])
     )
     .pipe(
       rename(function(path) {
