@@ -23,7 +23,7 @@ const uglify = require('gulp-uglify')
 
 // Watch SCSS files -> sourcemap, autroprefixer, minify with cssnano, rename .css to .min.css
 const scss = () => {
-  return src('src/assets/_pre/sass/main.scss', { sourcemaps: true })
+  return src('src/styles/main.scss', { sourcemaps: true })
     .pipe(sass().on('error', sass.logError))
     .pipe(
       autoprefixer({
@@ -54,7 +54,7 @@ const scss = () => {
 
 // Watch JS files -> sourcemap, minifiy with uglify, concat
 const js = () => {
-  return src('src/assets/_pre/js/*.js', { sourcemaps: true })
+  return src('src/scripts/js/*.js', { sourcemaps: true })
     .pipe(uglify())
     .pipe(concat('scripts.js'))
     .pipe(
@@ -64,7 +64,7 @@ const js = () => {
         }
       })
     )
-    .pipe(dest('src/assets/js/', { sourcemaps: true }))
+    .pipe(dest('temp/assets/js/', { sourcemaps: true }))
     .pipe(browserSync.stream())
 }
 
@@ -85,7 +85,7 @@ const jsLibs = () => {
         }
       })
     )
-    .pipe(dest('src/assets/js/'))
+    .pipe(dest('temp/assets/js/'))
 }
 
 // Delete all files in the dist folder
