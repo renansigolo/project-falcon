@@ -112,7 +112,7 @@ const generateSitemap = () => {
   })
     .pipe(
       sitemap({
-        siteUrl: 'https://www.INSERT_YOUR_WEBSITE_ADDRESS_HERE.com.br'
+        siteUrl: 'https://www.INSERT_YOUR_WEBSITE_ADDRESS_HERE.com'
       })
     )
     .pipe(dest('dist'))
